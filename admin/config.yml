@@ -1,15 +1,18 @@
-# NetlifyCMS Configuration for El Corazón Restaurant
+# Decap CMS (formerly NetlifyCMS) Configuration for El Corazón Restaurant
 # This file enables a user-friendly admin interface for editing content
 
+# Backend configuration - using git-gateway for Netlify Identity
 backend:
-  name: netlify
-  branch: main
+  name: git-gateway  # Uses Netlify Identity + Git Gateway (not deprecated, still supported)
+  branch: main       # Git branch to commit changes to
 
-media_folder: "images"
-public_folder: "/images"
+# Media storage configuration
+media_folder: "images"        # Folder where uploaded images are stored
+public_folder: "/images"      # Public URL path for accessing images
 
+# Collections define the content types users can edit
 collections:
-  # Restaurant Information
+  # Restaurant Information - Single file collection
   - name: "restaurant"
     label: "Restaurant Info"
     files:
@@ -24,12 +27,12 @@ collections:
           - {label: "About Image 1", name: "about_image_1", widget: "image"}
           - {label: "About Image 2", name: "about_image_2", widget: "image"}
 
-  # Menu Items
+  # Menu Items - Folder collection (allows creating new menu items)
   - name: "menu"
     label: "Menu Items"
-    folder: "content/menu"
-    create: true
-    slug: "{{slug}}"
+    folder: "content/menu"     # Folder where menu items are stored
+    create: true               # Allow creating new menu items
+    slug: "{{slug}}"           # Use slug as filename
     fields:
       - {label: "Category", name: "category", widget: "select", options: ["Appetizers", "Main Courses", "Desserts", "Beverages"]}
       - {label: "Dish Name", name: "name", widget: "string"}
@@ -37,17 +40,17 @@ collections:
       - {label: "Price", name: "price", widget: "string"}
       - {label: "Image", name: "image", widget: "image", required: false}
 
-  # Gallery Images
+  # Gallery Images - Folder collection (allows creating new gallery items)
   - name: "gallery"
     label: "Gallery"
-    folder: "content/gallery"
-    create: true
-    slug: "{{slug}}"
+    folder: "content/gallery"  # Folder where gallery items are stored
+    create: true               # Allow creating new gallery items
+    slug: "{{slug}}"           # Use slug as filename
     fields:
       - {label: "Image", name: "image", widget: "image"}
       - {label: "Caption", name: "caption", widget: "string", required: false}
 
-  # Contact Information
+  # Contact Information - Single file collection
   - name: "contact"
     label: "Contact Info"
     files:
@@ -61,7 +64,7 @@ collections:
           - {label: "Hours", name: "hours", widget: "text"}
           - {label: "Google Maps Link", name: "maps_link", widget: "string"}
 
-  # Social Media Links
+  # Social Media Links - Single file collection
   - name: "social"
     label: "Social Media"
     files:
