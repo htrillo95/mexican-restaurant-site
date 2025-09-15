@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Corazón - Content Manager</title>
+  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    /* Loading screen styles */
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Open Sans', sans-serif;
+      background: #f5f5dc;
+      color: #3e2723;
+    }
+    .loading h2 {
+      color: #C41E3A;
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading screen while CMS loads -->
+  <div class="loading" id="loading">
+    <div>
+      <h2>🍽️ El Corazón Restaurant</h2>
+      <p>Loading Content Manager...</p>
+    </div>
+  </div>
+
+  <!-- NetlifyCMS will automatically mount here -->
+  <div id="nc-root"></div>
+
+  <script>
+    // Hide loading screen when CMS is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if user is logged in
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', user => {
+          if (user) {
+            document.getElementById('loading').style.display = 'none';
+          } else {
+            // Show login prompt
+            document.getElementById('loading').innerHTML = `
+              <div>
+                <h2>🍽️ El Corazón Restaurant</h2>
+                <p>Please log in to access the content manager</p>
+                <button onclick="window.netlifyIdentity.open()" style="
+                  background: linear-gradient(45deg, #C41E3A, #FF6B35);
+                  color: white;
+                  border: none;
+                  padding: 12px 24px;
+                  border-radius: 25px;
+                  font-size: 16px;
+                  cursor: pointer;
+                  margin-top: 20px;
+                ">Log In</button>
+              </div>
+            `;
+          }
+        });
+      }
+    });
+
+    // Initialize Netlify Identity
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.init();
+    }
+  </script>
+</body>
+</html>
