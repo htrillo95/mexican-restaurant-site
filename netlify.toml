@@ -7,11 +7,6 @@
   to = "/admin/index.html"
   status = 200
 
-# Enable Netlify Identity for password protection
-[build.environment]
-  NETLIFY_IDENTITY = "true"
-
-# Password protection for admin area
 [[headers]]
   for = "/admin/*"
   [headers.values]

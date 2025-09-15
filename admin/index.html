@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>El Corazón - Content Manager</title>
   <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
-    /* Loading screen styles */
     .loading {
       display: flex;
       justify-content: center;
@@ -23,7 +21,6 @@
   </style>
 </head>
 <body>
-  <!-- Loading screen while CMS loads -->
   <div class="loading" id="loading">
     <div>
       <h2>🍽️ El Corazón Restaurant</h2>
@@ -31,56 +28,19 @@
     </div>
   </div>
 
-  <!-- NetlifyCMS will automatically mount here -->
   <div id="nc-root"></div>
 
   <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.init();
-
-      // 🔑 Handle password recovery tokens in URL
-      if (window.location.hash.includes("recovery_token")) {
-        window.netlifyIdentity.on("init", () => {
-          window.netlifyIdentity.open("recover");
-        });
-      }
-
-      // Handle login/logout state
-      window.netlifyIdentity.on('init', user => {
-        if (user) {
-          // User is logged in, hide loading screen
-          document.getElementById('loading').style.display = 'none';
-        } else {
-          // User is not logged in, show login prompt
-          document.getElementById('loading').innerHTML = `
-            <div>
-              <h2>🍽️ El Corazón Restaurant</h2>
-              <p>Please log in to access the content manager</p>
-              <button onclick="window.netlifyIdentity.open()" style="
-                background: linear-gradient(45deg, #C41E3A, #FF6B35);
-                color: white;
-                border: none;
-                padding: 12px 24px;
-                border-radius: 25px;
-                font-size: 16px;
-                cursor: pointer;
-                margin-top: 20px;
-              ">Log In</button>
-            </div>
-          `;
+    window.addEventListener("DOMContentLoaded", () => {
+      const observer = new MutationObserver(() => {
+        const cmsRoot = document.querySelector("#nc-root");
+        if (cmsRoot && cmsRoot.innerHTML.trim() !== "") {
+          document.getElementById("loading").style.display = "none";
+          observer.disconnect();
         }
       });
-
-      // Handle successful login
-      window.netlifyIdentity.on('login', user => {
-        document.getElementById('loading').style.display = 'none';
-      });
-
-      // Handle logout
-      window.netlifyIdentity.on('logout', () => {
-        location.reload();
-      });
-    }
+      observer.observe(document.querySelector("#nc-root"), { childList: true });
+    });
   </script>
 </body>
 </html>
