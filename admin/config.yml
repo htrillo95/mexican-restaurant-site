@@ -1,6 +1,6 @@
-# Decap CMS Configuration for El Corazón Restaurant
 backend:
-  name: git-gateway
+  name: github
+  repo: htrillo95/mexican-restaurant-site
   branch: main
 
 media_folder: "images"
