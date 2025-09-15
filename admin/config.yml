@@ -1,18 +1,13 @@
-# Decap CMS (formerly NetlifyCMS) Configuration for El Corazón Restaurant
-# This file enables a user-friendly admin interface for editing content
-
-# Backend configuration - using git-gateway for Netlify Identity
+# Decap CMS Configuration for El Corazón Restaurant
 backend:
-  name: git-gateway  # Uses Netlify Identity + Git Gateway (not deprecated, still supported)
-  branch: main       # Git branch to commit changes to
+  name: git-gateway
+  branch: main
 
-# Media storage configuration
-media_folder: "images"        # Folder where uploaded images are stored
-public_folder: "/images"      # Public URL path for accessing images
+media_folder: "images"
+public_folder: "/images"
 
-# Collections define the content types users can edit
 collections:
-  # Restaurant Information - Single file collection
+  # Restaurant Information
   - name: "restaurant"
     label: "Restaurant Info"
     files:
@@ -20,37 +15,37 @@ collections:
         label: "Restaurant Details"
         name: "restaurant"
         fields:
-          - {label: "Restaurant Name", name: "name", widget: "string"}
-          - {label: "Tagline", name: "tagline", widget: "string"}
-          - {label: "Hero Background Image", name: "hero_image", widget: "image"}
-          - {label: "About Text", name: "about_text", widget: "text"}
-          - {label: "About Image 1", name: "about_image_1", widget: "image"}
-          - {label: "About Image 2", name: "about_image_2", widget: "image"}
+          - {label: "Restaurant Name", name: "name", widget: "string", default: "El Corazón", hint: "Main restaurant name. Keep short and consistent (e.g., 'El Corazón')."}
+          - {label: "Tagline", name: "tagline", widget: "string", hint: "A short one-sentence phrase. Example: 'Authentic Mexican cuisine from the heart.'"}
+          - {label: "Hero Background Image", name: "hero_image", widget: "image", hint: "Upload a wide photo (min 1200px width). This shows at the top of the homepage."}
+          - {label: "About Text", name: "about_text", widget: "text", hint: "Write 2–3 short paragraphs. Keep it conversational, no special formatting."}
+          - {label: "About Image 1", name: "about_image_1", widget: "image", hint: "Portrait or square photo. Appears alongside About text."}
+          - {label: "About Image 2", name: "about_image_2", widget: "image", hint: "Second supporting photo for the About section."}
 
-  # Menu Items - Folder collection (allows creating new menu items)
+  # Menu Items
   - name: "menu"
     label: "Menu Items"
-    folder: "content/menu"     # Folder where menu items are stored
-    create: true               # Allow creating new menu items
-    slug: "{{slug}}"           # Use slug as filename
+    folder: "content/menu"
+    create: true
+    slug: "{{slug}}"
     fields:
-      - {label: "Category", name: "category", widget: "select", options: ["Appetizers", "Main Courses", "Desserts", "Beverages"]}
-      - {label: "Dish Name", name: "name", widget: "string"}
-      - {label: "Description", name: "description", widget: "text"}
-      - {label: "Price", name: "price", widget: "string"}
-      - {label: "Image", name: "image", widget: "image", required: false}
+      - {label: "Category", name: "category", widget: "select", options: ["Appetizers", "Main Courses", "Desserts", "Beverages"], hint: "Choose which section this dish belongs in."}
+      - {label: "Dish Name", name: "name", widget: "string", hint: "Keep it short (e.g., 'Tacos al Pastor')."}
+      - {label: "Description", name: "description", widget: "text", hint: "1–3 sentences. Describe the dish and key ingredients."}
+      - {label: "Price", name: "price", widget: "string", hint: "Format as number only (e.g., 12.99). The site adds $ automatically."}
+      - {label: "Image", name: "image", widget: "image", required: false, hint: "Optional. Upload a clear photo of the dish."}
 
-  # Gallery Images - Folder collection (allows creating new gallery items)
+  # Gallery
   - name: "gallery"
     label: "Gallery"
-    folder: "content/gallery"  # Folder where gallery items are stored
-    create: true               # Allow creating new gallery items
-    slug: "{{slug}}"           # Use slug as filename
+    folder: "content/gallery"
+    create: true
+    slug: "{{slug}}"
     fields:
-      - {label: "Image", name: "image", widget: "image"}
-      - {label: "Caption", name: "caption", widget: "string", required: false}
+      - {label: "Image", name: "image", widget: "image", hint: "Upload a photo. Landscape (wide) images look best."}
+      - {label: "Caption", name: "caption", widget: "string", required: false, hint: "Optional. A short caption for the image (e.g., 'Fresh margaritas')."}
 
-  # Contact Information - Single file collection
+  # Contact Information
   - name: "contact"
     label: "Contact Info"
     files:
@@ -58,13 +53,13 @@ collections:
         label: "Contact Details"
         name: "contact"
         fields:
-          - {label: "Address", name: "address", widget: "text"}
-          - {label: "Phone", name: "phone", widget: "string"}
-          - {label: "Email", name: "email", widget: "string"}
-          - {label: "Hours", name: "hours", widget: "text"}
-          - {label: "Google Maps Link", name: "maps_link", widget: "string"}
+          - {label: "Address", name: "address", widget: "text", hint: "Format like: '123 Main St, Philadelphia, PA 19104'."}
+          - {label: "Phone", name: "phone", widget: "string", hint: "Include area code (e.g., '(215) 555-1234')."}
+          - {label: "Email", name: "email", widget: "string", hint: "Business email address (e.g., 'info@elcorazon.com')."}
+          - {label: "Hours", name: "hours", widget: "text", hint: "Format each line like: 'Mon–Fri: 11am – 9pm'."}
+          - {label: "Google Maps Link", name: "maps_link", widget: "string", hint: "Paste full Google Maps URL for the restaurant location."}
 
-  # Social Media Links - Single file collection
+  # Social Media
   - name: "social"
     label: "Social Media"
     files:
@@ -72,7 +67,7 @@ collections:
         label: "Social Links"
         name: "social"
         fields:
-          - {label: "Facebook", name: "facebook", widget: "string", required: false}
-          - {label: "Instagram", name: "instagram", widget: "string", required: false}
-          - {label: "Twitter", name: "twitter", widget: "string", required: false}
-          - {label: "Yelp", name: "yelp", widget: "string", required: false}
+          - {label: "Facebook", name: "facebook", widget: "string", required: false, hint: "Paste full URL (e.g., 'https://facebook.com/elcorazon')."}
+          - {label: "Instagram", name: "instagram", widget: "string", required: false, hint: "Paste full URL (e.g., 'https://instagram.com/elcorazon')."}
+          - {label: "Twitter", name: "twitter", widget: "string", required: false, hint: "Paste full URL (e.g., 'https://twitter.com/elcorazon')."}
+          - {label: "Yelp", name: "yelp", widget: "string", required: false, hint: "Paste full URL (e.g., 'https://yelp.com/biz/elcorazon')."}
