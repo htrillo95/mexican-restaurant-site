@@ -35,46 +35,52 @@
   <div id="nc-root"></div>
 
   <script>
-    // Initialize Netlify Identity
     if (window.netlifyIdentity) {
       window.netlifyIdentity.init();
-    }
 
-    // Handle login/logout
-    window.netlifyIdentity.on('init', user => {
-      if (user) {
-        // User is logged in, hide loading screen
-        document.getElementById('loading').style.display = 'none';
-      } else {
-        // User is not logged in, show login prompt
-        document.getElementById('loading').innerHTML = `
-          <div>
-            <h2>🍽️ El Corazón Restaurant</h2>
-            <p>Please log in to access the content manager</p>
-            <button onclick="window.netlifyIdentity.open()" style="
-              background: linear-gradient(45deg, #C41E3A, #FF6B35);
-              color: white;
-              border: none;
-              padding: 12px 24px;
-              border-radius: 25px;
-              font-size: 16px;
-              cursor: pointer;
-              margin-top: 20px;
-            ">Log In</button>
-          </div>
-        `;
+      // 🔑 Handle password recovery tokens in URL
+      if (window.location.hash.includes("recovery_token")) {
+        window.netlifyIdentity.on("init", () => {
+          window.netlifyIdentity.open("recover");
+        });
       }
-    });
 
-    // Handle successful login
-    window.netlifyIdentity.on('login', user => {
-      document.getElementById('loading').style.display = 'none';
-    });
+      // Handle login/logout state
+      window.netlifyIdentity.on('init', user => {
+        if (user) {
+          // User is logged in, hide loading screen
+          document.getElementById('loading').style.display = 'none';
+        } else {
+          // User is not logged in, show login prompt
+          document.getElementById('loading').innerHTML = `
+            <div>
+              <h2>🍽️ El Corazón Restaurant</h2>
+              <p>Please log in to access the content manager</p>
+              <button onclick="window.netlifyIdentity.open()" style="
+                background: linear-gradient(45deg, #C41E3A, #FF6B35);
+                color: white;
+                border: none;
+                padding: 12px 24px;
+                border-radius: 25px;
+                font-size: 16px;
+                cursor: pointer;
+                margin-top: 20px;
+              ">Log In</button>
+            </div>
+          `;
+        }
+      });
 
-    // Handle logout
-    window.netlifyIdentity.on('logout', () => {
-      location.reload();
-    });
+      // Handle successful login
+      window.netlifyIdentity.on('login', user => {
+        document.getElementById('loading').style.display = 'none';
+      });
+
+      // Handle logout
+      window.netlifyIdentity.on('logout', () => {
+        location.reload();
+      });
+    }
   </script>
 </body>
 </html>
